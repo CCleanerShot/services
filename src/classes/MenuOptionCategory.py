@@ -1,5 +1,5 @@
 import json
-from classes.MenuOptionChoice import MenuOptionChoice
+from classes import MenuOptionChoice
 
 class MenuOptionCategory:
     def __init__(self, name: str = "", choices: list[MenuOptionChoice] = [], amount_limit: int = 0, amount_required: int = 0):

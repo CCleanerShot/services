@@ -1,3 +1,4 @@
+from .Coordinate import Coordinate
 from .MenuItem import MenuItem
 from .MenuOptionCategory import MenuOptionCategory
 from .MenuOptionChoice import MenuOptionChoice

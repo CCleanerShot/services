@@ -1,9 +1,8 @@
 # TODO: future, diff from the base average restaurant's items, instead of unique ones for each location
-from main import search_feed
 from classes import MenuItem
-from general import search_home
-from utility import query_selector_all
 from scrape import scrape_modal
+from utility import query_selector_all
+from general import search_feed, search_home
 from playwright.async_api import async_playwright
 
 async def scrape_restaurant(restaurant: str, location: str) -> list[MenuItem]:
