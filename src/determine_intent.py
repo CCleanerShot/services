@@ -7,18 +7,41 @@ from literals import MessageType
 dotenv.load_dotenv()
 
 def determine_intent(query: str) -> MessageType:
-    client = Anthropic(api_key="")
+    """
+    Determine whether a given message is an 'Order' or a 'Question' using Anthropic's model.
+
+    Args:
+        query: The message text to classify.
+
+    Returns:
+        A string literal "Order" or "Question" representing the message type.
+
+    Raises:
+        Exception: If the model returns a value outside the expected MessageType literals.
+    """
+    client = Anthropic()
 
     system_prompt = """
-    Determine if the message is a question or an order. Do not immediately assume it's a question if it has a question mark. If removing the question mark would make it an order, classify it as an order. Only ever answer with "Order" or "Question". If you are unsure, default to question.
+    Determine if the message is a question or an order. Do not immediately assume it's a question if it has a question mark. 
+    If removing the question mark would make it an order, classify it as an order. 
+    Only ever answer with "Order" or "Question". If you are unsure, default to question.
     """
 
-    response = client.messages.create(messages=[{"role": "user", "content": query}], system=system_prompt, max_tokens=1024, model="claude-sonnet-4-5-20250929")
-    text = str(response.content[0].text)
-    
+    response = client.messages.create(
+        messages=[{"role": "user", "content": query}],
+        system=system_prompt,
+        max_tokens=1024,
+        model="claude-sonnet-4-5-20250929"
+    )
+
+    text = str(response.content[0].text).strip()
+
     if text not in get_args(MessageType):
-        raise Exception(f"Expected {get_args(MessageType)}, received {text}. You should attempt it again, or adjust the prompt...")
-    
+        raise Exception(
+            f"Expected one of {get_args(MessageType)}, received '{text}'. "
+            "You should attempt it again, or adjust the prompt..."
+        )
+
     return text
 
 
@@ -26,12 +49,12 @@ if __name__ == "__main__":
     try:
         args = sys.argv[1:]
 
-        if args.__len__() != 1:
+        if len(args) != 1:
             raise Exception("Usage: determine_intent.py <query>")
 
         query = args[0]
         result = determine_intent(query)
         print(result)
-    
+
     except Exception as e:
         print(f"Error: {e}")

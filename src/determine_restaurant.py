@@ -8,15 +8,18 @@ def determine_restaurant(query: str, surrounding_restaurants_context: str):
     client = Anthropic()
 
     system_prompt = """
-    Based on the order, combined with the user's purchase history, respond with only the name of the restaurant they are likely referring to. You will be given a list of existing restaurants near the user as well. If you cannot determine the restaurant, respond with 'N/A'.
+    Determine what restaurant the query is likely referring to, and respond with only the name of the restaurant. You will be given a list of existing restaurants near the user as well. If you cannot determine the restaurant, respond with 'N/A'.
     """
 
     result = f"""
-    User History:
-    
+    Surrounding Restaurants:
+    {surrounding_restaurants_context}
+
+    Query:
+    {query}
     """
 
-    client.messages.create(messages=[query], system=system_prompt)
+    client.messages.create(messages=[result], system=system_prompt)
 
 
 if __name__ == "__main__":

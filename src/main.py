@@ -1,5 +1,4 @@
 import asyncio
-import subprocess
 import sys
 
 from determine_intent import determine_intent
@@ -10,7 +9,7 @@ async def main(query: str, userID: str, latitude: float, longitude: float) -> bo
     intent = determine_intent(query)
 
     if intent == "Order":
-        # 
+        # query restaurants who are close in promixity to the user
         restaurant = determine_restaurant(query, )
     else:
         # get the question

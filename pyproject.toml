@@ -7,5 +7,6 @@ requires-python = ">=3.13"
 dependencies = [
     "anthropic>=0.72.0",
     "dotenv>=0.9.9",
+    "geopy>=2.4.1",
     "playwright==1.55.0",
 ]
