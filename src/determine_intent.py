@@ -7,7 +7,7 @@ from literals import MessageType
 dotenv.load_dotenv()
 
 def determine_intent(query: str) -> MessageType:
-    client = Anthropic()
+    client = Anthropic(api_key="")
 
     system_prompt = """
     Determine if the message is a question or an order. Do not immediately assume it's a question if it has a question mark. If removing the question mark would make it an order, classify it as an order. Only ever answer with "Order" or "Question". If you are unsure, default to question.
